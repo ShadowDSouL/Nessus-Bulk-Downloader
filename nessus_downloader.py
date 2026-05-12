@@ -145,8 +145,6 @@ class BulkDownloader:
     def download_scan(self, scan: dict) -> dict:
         scan_id = scan["id"]
         scan_name = self.sanitize_name(scan.get("name", f"scan_{scan_id}"))
-        scan_dir = self.output_dir / scan_name
-        scan_dir.mkdir(parents=True, exist_ok=True)
 
         result = {"scan_id": scan_id, "scan_name": scan_name, "formats": {}}
 
@@ -154,7 +152,7 @@ class BulkDownloader:
             try:
                 self.log(f"[{scan_name}] Requesting {fmt.upper()} export...")
 
-                chapters = "vuln_hosts_summary;vuln_by_host;compliance_exec;remediations;vuln_by_plugin;compliance" if fmt == "html" else None
+                chapters = "vuln_hosts_summary;vuln_by_host;compliance_exec;remediations;compliance" if fmt == "html" else None
                 file_id = self.client.export_scan(scan_id, fmt, chapters)
 
                 self.log(f"[{scan_name}] Waiting for {fmt.upper()} export (file: {file_id})...")
@@ -171,7 +169,7 @@ class BulkDownloader:
                 ext_map = {"nessus": ".nessus", "html": ".html", "csv": ".csv",
                            "pdf": ".pdf", "db": ".db"}
                 ext = ext_map.get(fmt, f".{fmt}")
-                filepath = scan_dir / f"{scan_name}{ext}"
+                filepath = self.output_dir / f"{scan_name}{ext}"
                 filepath.write_bytes(content)
 
                 size_kb = len(content) / 1024
