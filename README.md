@@ -108,14 +108,12 @@ python nessus_downloader.py \
 
 ```
 nessus_downloads/
-├── Scan_Name_1/
-│   ├── Scan_Name_1.nessus
-│   ├── Scan_Name_1.html
-│   └── Scan_Name_1.csv
-├── Scan_Name_2/
-│   ├── Scan_Name_2.nessus
-│   ├── Scan_Name_2.html
-│   └── Scan_Name_2.csv
+├── Scan_Name_1.nessus
+├── Scan_Name_1.html
+├── Scan_Name_1.csv
+├── Scan_Name_2.nessus
+├── Scan_Name_2.html
+└── Scan_Name_2.csv
 ...
 └── download_report_20250512_143022.json
 ```
